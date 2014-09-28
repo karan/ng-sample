@@ -11,16 +11,47 @@
 
       $scope.user = {
         diameter: 200,
+        left: 0,
         style: {},
+      };
+
+      $scope.calcStyle = function(user) {
+        user.style = {
+          width: user.diameter + 'px',
+          height: user.diameter + 'px',
+          left: user.left + 'px',
+        };
+      };
+
+      $scope.style = function(user) {
+        return user.style;
       };
 
     });
   </script>
+
+  <style>
+    #circle {
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      top: 200px;
+      left: 0px;
+      background: red;
+      position: absolute;
+      transition: 1s;
+      max-width: 400px;
+      max-height: 400px;
+    }
+  </style>
 </head>
 <body ng-app="app">
   
   <div ng-controller="MyCtrl">
-    <p>{{user.diameter}}</p>
+    Diameter: <input type="range" ng-model="user.diameter" ng-change="calcStyle(user)" min="1" max="400" /> {{ user.diameter }}
+    <br>
+    Left margin: <input type="range" ng-model="user.left" ng-change="calcStyle(user)" min="1" max="400" /> {{ user.left }}
+    <div id="circle" ng-style="style(user)"></div>
   </div>
 
 </body>
